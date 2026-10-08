@@ -20,6 +20,7 @@ jobs:
           SS_MAX_MINUTES: "310"
           SS_INTERVAL_SECONDS: "90"
           SS_BUDGET_SECONDS: "45"
+          MOURJAN_ENABLED: "true"
           DATABASE_ADMIN_URL: ${{ secrets.DATABASE_ADMIN_URL }}
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
