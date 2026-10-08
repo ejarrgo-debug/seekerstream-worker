@@ -1,0 +1,1 @@
+{"name":"seekerstream-worker","private":true,"type":"module","dependencies":{"pg":"^8.13.0","telegram":"^2.26.22"}}
