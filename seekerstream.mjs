@@ -14,125 +14,6 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// src/seekerstream/db.ts
-import pg from "pg";
-function ssPool() {
-  if (pool) return pool;
-  const raw = process.env.DATABASE_ADMIN_URL;
-  if (!raw) throw new Error("DATABASE_ADMIN_URL is not set");
-  const u = new URL(raw);
-  u.searchParams.delete("channel_binding");
-  const url = u.toString();
-  pool = new pg.Pool({
-    connectionString: url,
-    ssl: /sslmode=require|neon\.tech/.test(url) ? { rejectUnauthorized: false } : false,
-    max: 3,
-    connectionTimeoutMillis: 2e4,
-    idleTimeoutMillis: 1e4
-  });
-  pool.on("error", (e) => console.error("[seekerstream db]", e.message));
-  return pool;
-}
-async function withClient(fn) {
-  const c = await ssPool().connect();
-  try {
-    return await fn(c);
-  } finally {
-    c.release();
-  }
-}
-var pool;
-var init_db = __esm({
-  "src/seekerstream/db.ts"() {
-    "use strict";
-    pool = null;
-  }
-});
-
-// src/seekerstream/schema.ts
-async function ensureSchema(client) {
-  await client.query(SEEKERSTREAM_SQL);
-  await client.query(`do $$ begin
-    if exists (select 1 from pg_roles where rolname = 'app_user') then
-      revoke all on public.market_leads, public.market_sources, public.market_suppression, public.market_runs from app_user;
-    end if; end $$;`);
-}
-var SEEKERSTREAM_SQL;
-var init_schema = __esm({
-  "src/seekerstream/schema.ts"() {
-    "use strict";
-    SEEKERSTREAM_SQL = `
-create table if not exists public.market_leads (
-  id             uuid primary key default gen_random_uuid(),
-  source         text not null,                 -- telegram | web_form | google_ads | meta_ads
-  external_id    text not null unique,
-  fingerprint    text not null unique,          -- normalised-text hash: one request = one lead
-  channel        text,
-  channel_title  text,
-  permalink      text,
-  author_handle  text,
-  author_name    text,
-  body           text not null,
-  language       text,
-  intent         text not null default 'rent',  -- rent | buy | share
-  beds           int,
-  budget         numeric(14,2),
-  budget_period  text,
-  areas          text[] not null default '{}',
-  emirate        text,
-  urgent         boolean not null default false,
-  urgency_reason text,
-  phone          text,                          -- first UAE mobile the person published
-  name           text,                          -- from a form, when given
-  email          text,
-  consent        boolean not null default false,-- came through a form with explicit consent
-  score          int not null default 50,
-  reason         text,
-  posted_at      timestamptz,
-  detected_at    timestamptz not null default now(),
-  claimed_org    uuid references public.organizations(id) on delete set null,
-  claimed_by     uuid references users(id) on delete set null,
-  claimed_at     timestamptz,
-  contact_id     uuid references public.contacts(id) on delete set null,
-  hidden         boolean not null default false
-);
-create index if not exists market_leads_feed on public.market_leads (detected_at desc) where not hidden;
-create index if not exists market_leads_claims on public.market_leads (claimed_org, claimed_at desc);
-create index if not exists market_leads_author on public.market_leads (author_handle, detected_at desc);
-
-create table if not exists public.market_sources (
-  id            text primary key,               -- e.g. telegram:rent_in_dubai
-  kind          text not null,                  -- telegram
-  handle        text not null,
-  title         text,
-  enabled       boolean not null default true,
-  cursor        bigint not null default 0,      -- last message id read
-  last_scan_at  timestamptz,
-  last_error    text,
-  scanned_total int not null default 0,
-  leads_total   int not null default 0,
-  created_at    timestamptz not null default now()
-);
-
--- People who asked not to be contacted, and numbers on the Do-Not-Call registry.
-create table if not exists public.market_suppression (
-  phone     text primary key,
-  reason    text,
-  added_at  timestamptz not null default now()
-);
-
-create table if not exists public.market_runs (
-  id          bigserial primary key,
-  started_at  timestamptz not null default now(),
-  ms          int,
-  scanned     int not null default 0,
-  leads       int not null default 0,
-  note        text
-);
-`;
-  }
-});
-
 // src/seekerstream/lexicon.json
 var lexicon_default;
 var init_lexicon = __esm({
@@ -3534,8 +3415,8 @@ var init_regex = __esm({
 });
 
 // src/seekerstream/prefilter.ts
-function normalizeText(text) {
-  let t2 = text.normalize("NFKC");
+function normalizeText(text2) {
+  let t2 = text2.normalize("NFKC");
   t2 = t2.replace(HARAKAT, "");
   t2 = t2.replace(FOLD_RE, (c) => FOLD[c]);
   return t2.replace(SPACE_RUN, " ").replace(TRIM, "");
@@ -3543,10 +3424,10 @@ function normalizeText(text) {
 function countUnique(p, s) {
   return new Set(s.match(rx(p, true)) ?? []).size;
 }
-function prefilter(text, opts = {}) {
+function prefilter(text2, opts = {}) {
   const { title = "", demandContext = false, geoContext = false } = opts;
   const raw = title ? `${title}
-${text}` : text;
+${text2}` : text2;
   const norm = normalizeText(raw);
   const normTitle = title ? normalizeText(title) : "";
   const res = {
@@ -3684,10 +3565,10 @@ var init_prefilter = __esm({
 });
 
 // src/seekerstream/extract.ts
-function detectLanguage(text) {
+function detectLanguage(text2) {
   const counts = {};
   let latin = 0;
-  for (const ch of text) {
+  for (const ch of text2) {
     if (!LETTER.test(ch)) continue;
     const cp = ch.codePointAt(0);
     if (cp < 592) {
@@ -3706,19 +3587,19 @@ function detectLanguage(text) {
       if (script === "cyrillic") return "ru";
       if (script === "devanagari") return "hi";
       if (script === "arabic") {
-        if (t(X._URDU_CUES, text)) return "ur";
-        if (t(X._FARSI_CUES, text)) return "fa";
+        if (t(X._URDU_CUES, text2)) return "ur";
+        if (t(X._FARSI_CUES, text2)) return "fa";
         return "ar";
       }
     }
   }
-  if (t(X._HI_LATN_CUES, text)) return "hi_latn";
-  if (t(X._TAGALOG_CUES, text)) return "tl";
-  if (t(X._FRENCH_CUES, text)) return "fr";
+  if (t(X._HI_LATN_CUES, text2)) return "hi_latn";
+  if (t(X._TAGALOG_CUES, text2)) return "tl";
+  if (t(X._FRENCH_CUES, text2)) return "fr";
   return "en";
 }
-function parseIntent(text) {
-  const s = normalizeText(text);
+function parseIntent(text2) {
+  const s = normalizeText(text2);
   if (t(X._SHARE, s)) return "share";
   if (t(X._BUY, s) || t(X._WANT_FOR_SALE, s)) return "buy";
   const m = m1(X._BIG_PRICE, s);
@@ -3727,8 +3608,8 @@ function parseIntent(text) {
   }
   return "rent";
 }
-function parseBeds(text) {
-  const s = normalizeText(text);
+function parseBeds(text2) {
+  const s = normalizeText(text2);
   if (t(P("\u063A\u0631\u0641\u062A\u064A\u0646|\u063A\u0631\u0641\u062A\u0627\u0646"), s)) return 2;
   if (t(X._BEDSPACE, s)) return 0;
   if (t(X._STUDIO, s)) return 0;
@@ -3767,8 +3648,8 @@ function clean(x) {
   const v = Number(s);
   return Number.isFinite(v) ? v : null;
 }
-function parseBudget(text) {
-  let s = toAsciiDigits(normalizeText(text));
+function parseBudget(text2) {
+  let s = toAsciiDigits(normalizeText(text2));
   s = s.replace(rx(X._PHONE_CANDIDATE, true), " <phone> ");
   const currency = t(X._FOREIGN_CURRENCY, s) && !t(X._CURRENCY_HINT, s) ? "other" : "AED";
   let amount = null;
@@ -3821,14 +3702,14 @@ function parseBudget(text) {
   else period = "unknown";
   return { amount: Math.trunc(amount), period, currency, source: src.trim() };
 }
-function parseAreas(text) {
-  const s = normalizeText(text);
+function parseAreas(text2) {
+  const s = normalizeText(text2);
   let found = AREAS.filter(([, src, fl]) => t([src, fl], s)).map(([name]) => name);
   if (found.length > 1 && found.includes("Dubai")) found = [...found.filter((f) => f !== "Dubai"), "Dubai"];
   return found;
 }
-function parseUrgency(text) {
-  const s = normalizeText(text);
+function parseUrgency(text2) {
+  const s = normalizeText(text2);
   for (const [src, fl, why] of URGENT) if (t([src, fl], s)) return [true, why];
   return [false, ""];
 }
@@ -3859,17 +3740,17 @@ function extractPhones(body) {
   }
   return out;
 }
-function extract(text) {
-  const [urgent, why] = parseUrgency(text);
+function extract(text2) {
+  const [urgent, why] = parseUrgency(text2);
   return {
-    language: detectLanguage(text),
-    intent: parseIntent(text),
-    beds: parseBeds(text),
-    budget: parseBudget(text),
-    areas: parseAreas(text),
+    language: detectLanguage(text2),
+    intent: parseIntent(text2),
+    beds: parseBeds(text2),
+    budget: parseBudget(text2),
+    areas: parseAreas(text2),
     urgent,
     urgencyReason: why,
-    phones: extractPhones(text)
+    phones: extractPhones(text2)
   };
 }
 var X, AREAS, URGENT, t, m1, SCRIPTS, LETTER, P, AR_DIGITS, toAsciiDigits, cps, MOBILE, OPERATOR;
@@ -3902,10 +3783,329 @@ var init_extract = __esm({
   }
 });
 
+// src/seekerstream/mourjan.ts
+function mourjanEnabled() {
+  return process.env.MOURJAN_ENABLED === "true";
+}
+function mourjanSections() {
+  const out = [];
+  for (const e of MOURJAN_EMIRATES) for (const c of MOURJAN_CATEGORIES) for (const m of MODES) out.push(e ? `/ae/${e}/${c}/${m}/` : `/ae/${c}/${m}/`);
+  return out;
+}
+function parseDisallow(txt) {
+  const rules = [];
+  let applies = false, seenAgent = false;
+  for (const raw of txt.split(/\r?\n/)) {
+    const line = raw.split("#")[0].trim();
+    if (!line) continue;
+    const m = line.match(/^([A-Za-z-]+)\s*:\s*(.*)$/);
+    if (!m) continue;
+    const k = m[1].toLowerCase(), v = m[2].trim();
+    if (k === "user-agent") {
+      if (seenAgent && rules.length && !applies) {
+      }
+      applies = v === "*" || /corehold/i.test(v);
+      seenAgent = true;
+    } else if (k === "disallow" && applies && v) rules.push(v);
+  }
+  return rules;
+}
+function pathAllowed(path, disallow) {
+  return !disallow.some((d) => path.startsWith(d.replace(/\*.*$/, "")));
+}
+function text(html) {
+  return html.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&(amp|quot|#39|lt|gt|nbsp);/g, (m) => ENT[m]).replace(/\s+/g, " ").trim();
+}
+function parseRelativeTime(s, now = Date.now()) {
+  for (const [rx2, ms] of REL) {
+    const m = s.match(rx2);
+    if (m) return new Date(now - Number(m[1]) * ms);
+  }
+  if (!/\d/.test(s)) {
+    for (const [w, ms] of WORDS) if (s.includes(w)) return new Date(now - ms);
+  }
+  return null;
+}
+function parseIndex(html) {
+  const out = [];
+  const blocks = html.split(/<div[^>]*\bclass=["']?ad["' >]/i).slice(1);
+  for (const b of blocks) {
+    const uid = b.match(/data-uid=["']?(\d+)/)?.[1] ?? "";
+    const href = b.match(/href=["']?(\/ae\/[a-z0-9\-/]+?\/(\d+)\/?)["' >]/i);
+    if (!href) continue;
+    const m = href[1].match(/^\/ae\/(?:([a-z-]+)\/)?([a-z-]+)\/(ask-rent|ask-buy)\/\d+\/?$/);
+    if (!m) continue;
+    const content = b.match(/class=["']?content[^>]*>([\s\S]*?)<\/div>/i);
+    const body = content ? text(content[1]) : "";
+    if (body.length < 12) continue;
+    let postedAt = null, fromOwner = false;
+    const hint = b.match(/class=["']?box hint["']?[^>]*>([\s\S]*?)<\/a>/i);
+    for (const d of (hint ? hint[1] : "").matchAll(/<div[^>]*>([\s\S]*?)<\/div>/gi)) {
+      const s = text(d[1]);
+      if (!s) continue;
+      if (/المالك|owner/i.test(s)) fromOwner = true;
+      else if (!postedAt) postedAt = parseRelativeTime(s);
+    }
+    const em = m[1] && MOURJAN_EMIRATES.includes(m[1]) ? EMIRATE_NAME[m[1]] ?? null : null;
+    out.push({ id: href[2], text: body, href: href[1], postedAt, emirate: em, mode: m[3], uid, fromOwner });
+  }
+  return out;
+}
+function findPhone(html) {
+  for (const m of html.matchAll(/(?:\+?971|00971|0)[\s\-.]?5[\s\-.]?[0245689](?:[\s\-.]?\d){7}/g)) {
+    const n = normalizeUaeMobile(m[0]);
+    if (n) return n.e164;
+  }
+  return null;
+}
+async function scanMourjan(db, sections, deadline, maxContacts = 12) {
+  const web = new Polite();
+  const ads = [];
+  let pages = 0;
+  for (const s of sections) {
+    if (Date.now() > deadline) break;
+    const html = await web.get(s);
+    if (html) {
+      pages++;
+      ads.push(...parseIndex(html));
+    }
+    if (web.blocked) break;
+  }
+  const byUid = /* @__PURE__ */ new Map();
+  for (const a of ads) if (a.uid) byUid.set(a.uid, (byUid.get(a.uid) ?? 0) + 1);
+  const uniq = /* @__PURE__ */ new Map();
+  for (const a of ads) if (!(a.uid && (byUid.get(a.uid) ?? 0) >= 4) && !uniq.has(a.id)) uniq.set(a.id, a);
+  const list = [...uniq.values()];
+  const known = new Set(
+    list.length ? (await db.query("select external_id from market_leads where external_id = any($1)", [list.map((a) => `mourjan:${a.id}`)])).rows.map((r) => r.external_id) : []
+  );
+  const posts = [];
+  let contacts = 0;
+  for (const a of list) {
+    const externalId = `mourjan:${a.id}`;
+    if (known.has(externalId)) continue;
+    posts.push({
+      source: "mourjan",
+      externalId,
+      text: a.text,
+      permalink: BASE + a.href,
+      postedAt: a.postedAt,
+      channel: a.mode,
+      channelTitle: a.mode === "ask-rent" ? "\u0645\u0631\u062C\u0627\u0646 \xB7 \u0645\u0637\u0644\u0648\u0628 \u0644\u0644\u0625\u064A\u062C\u0627\u0631" : "\u0645\u0631\u062C\u0627\u0646 \xB7 \u0645\u0637\u0644\u0648\u0628 \u0644\u0644\u0634\u0631\u0627\u0621",
+      emirate: a.emirate
+    });
+  }
+  return { posts, pages, ads: ads.length, blocked: web.blocked, fetchPhone: async (p) => {
+    if (contacts >= maxContacts || Date.now() > deadline + 15e3 || !p.permalink) return;
+    contacts++;
+    const html = await web.get(p.permalink.replace(BASE, ""));
+    const phone = html ? findPhone(html) : null;
+    if (phone) p.phone = phone;
+  } };
+}
+var BASE, UA, DELAY_MS, MOURJAN_EMIRATES, MOURJAN_CATEGORIES, MODES, EMIRATE_NAME, Polite, ENT, WORDS, REL;
+var init_mourjan = __esm({
+  "src/seekerstream/mourjan.ts"() {
+    "use strict";
+    init_extract();
+    BASE = "https://www.mourjan.com";
+    UA = "CoreholdBot/1.0 (+https://app.corehold.systems; authorized by Mourjan, ref MRG-PDA-2026-1008)";
+    DELAY_MS = 2500;
+    MOURJAN_EMIRATES = ["", "dubai", "abu-dhabi", "sharjah", "ajman", "fujairah", "ras-al-khaimah", "umm-al-quwain", "al-ain"];
+    MOURJAN_CATEGORIES = ["properties", "apartments", "villas-and-houses", "furnished-apartments"];
+    MODES = ["ask-rent", "ask-buy"];
+    EMIRATE_NAME = {
+      dubai: "Dubai",
+      "abu-dhabi": "Abu Dhabi",
+      sharjah: "Sharjah",
+      ajman: "Ajman",
+      fujairah: "Fujairah",
+      "ras-al-khaimah": "Ras Al Khaimah",
+      "umm-al-quwain": "Umm Al Quwain",
+      "al-ain": "Abu Dhabi"
+    };
+    Polite = class {
+      last = 0;
+      blocked = false;
+      disallow = null;
+      async get(path) {
+        if (this.blocked) return null;
+        if (!this.disallow) {
+          try {
+            const r = await fetch(`${BASE}/robots.txt`, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(1e4) });
+            this.disallow = r.ok ? parseDisallow(await r.text()) : [];
+          } catch {
+            this.disallow = [];
+          }
+        }
+        if (!pathAllowed(path, this.disallow)) return null;
+        const wait = DELAY_MS - (Date.now() - this.last);
+        if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+        this.last = Date.now();
+        try {
+          const r = await fetch(BASE + path, { headers: { "User-Agent": UA, "Accept-Language": "ar,en;q=0.8" }, redirect: "follow", signal: AbortSignal.timeout(15e3) });
+          if ([403, 429, 503].includes(r.status)) {
+            this.blocked = true;
+            return null;
+          }
+          return r.ok ? await r.text() : null;
+        } catch {
+          return null;
+        }
+      }
+    };
+    ENT = { "&amp;": "&", "&quot;": '"', "&#39;": "'", "&lt;": "<", "&gt;": ">", "&nbsp;": " " };
+    WORDS = [
+      ["\u062F\u0642\u064A\u0642\u062A\u064A\u0646", 2 * 6e4],
+      ["\u062F\u0642\u064A\u0642\u0629", 6e4],
+      ["\u062F\u0642\u064A\u0642\u0647", 6e4],
+      ["\u0633\u0627\u0639\u062A\u064A\u0646", 2 * 36e5],
+      ["\u0633\u0627\u0639\u0629", 36e5],
+      ["\u0633\u0627\u0639\u0647", 36e5],
+      ["\u064A\u0648\u0645\u064A\u0646", 2 * 864e5],
+      ["\u064A\u0648\u0645", 864e5],
+      ["\u0623\u0633\u0628\u0648\u0639\u064A\u0646", 14 * 864e5],
+      ["\u0627\u0633\u0628\u0648\u0639\u064A\u0646", 14 * 864e5],
+      ["\u0623\u0633\u0628\u0648\u0639", 7 * 864e5],
+      ["\u0627\u0633\u0628\u0648\u0639", 7 * 864e5],
+      ["\u0634\u0647\u0631\u064A\u0646", 60 * 864e5],
+      ["\u0634\u0647\u0631", 30 * 864e5]
+    ];
+    REL = [
+      [/(\d+)\s*دقيق/, 6e4],
+      [/(\d+)\s*ساع/, 36e5],
+      [/(\d+)\s*(?:يوم|أيام)/, 864e5],
+      [/(\d+)\s*أسبوع/, 7 * 864e5],
+      [/(\d+)\s*minute/i, 6e4],
+      [/(\d+)\s*hour/i, 36e5],
+      [/(\d+)\s*day/i, 864e5]
+    ];
+  }
+});
+
+// src/seekerstream/db.ts
+import pg from "pg";
+function ssPool() {
+  if (pool) return pool;
+  const raw = process.env.DATABASE_ADMIN_URL;
+  if (!raw) throw new Error("DATABASE_ADMIN_URL is not set");
+  const u = new URL(raw);
+  u.searchParams.delete("channel_binding");
+  const url = u.toString();
+  pool = new pg.Pool({
+    connectionString: url,
+    ssl: /sslmode=require|neon\.tech/.test(url) ? { rejectUnauthorized: false } : false,
+    max: 3,
+    connectionTimeoutMillis: 2e4,
+    idleTimeoutMillis: 1e4
+  });
+  pool.on("error", (e) => console.error("[seekerstream db]", e.message));
+  return pool;
+}
+async function withClient(fn) {
+  const c = await ssPool().connect();
+  try {
+    return await fn(c);
+  } finally {
+    c.release();
+  }
+}
+var pool;
+var init_db = __esm({
+  "src/seekerstream/db.ts"() {
+    "use strict";
+    pool = null;
+  }
+});
+
+// src/seekerstream/schema.ts
+async function ensureSchema(client) {
+  await client.query(SEEKERSTREAM_SQL);
+  await client.query(`do $$ begin
+    if exists (select 1 from pg_roles where rolname = 'app_user') then
+      revoke all on public.market_leads, public.market_sources, public.market_suppression, public.market_runs from app_user;
+    end if; end $$;`);
+}
+var SEEKERSTREAM_SQL;
+var init_schema = __esm({
+  "src/seekerstream/schema.ts"() {
+    "use strict";
+    SEEKERSTREAM_SQL = `
+create table if not exists public.market_leads (
+  id             uuid primary key default gen_random_uuid(),
+  source         text not null,                 -- telegram | web_form | google_ads | meta_ads
+  external_id    text not null unique,
+  fingerprint    text not null unique,          -- normalised-text hash: one request = one lead
+  channel        text,
+  channel_title  text,
+  permalink      text,
+  author_handle  text,
+  author_name    text,
+  body           text not null,
+  language       text,
+  intent         text not null default 'rent',  -- rent | buy | share
+  beds           int,
+  budget         numeric(14,2),
+  budget_period  text,
+  areas          text[] not null default '{}',
+  emirate        text,
+  urgent         boolean not null default false,
+  urgency_reason text,
+  phone          text,                          -- first UAE mobile the person published
+  name           text,                          -- from a form, when given
+  email          text,
+  consent        boolean not null default false,-- came through a form with explicit consent
+  score          int not null default 50,
+  reason         text,
+  posted_at      timestamptz,
+  detected_at    timestamptz not null default now(),
+  claimed_org    uuid references public.organizations(id) on delete set null,
+  claimed_by     uuid references users(id) on delete set null,
+  claimed_at     timestamptz,
+  contact_id     uuid references public.contacts(id) on delete set null,
+  hidden         boolean not null default false
+);
+create index if not exists market_leads_feed on public.market_leads (detected_at desc) where not hidden;
+create index if not exists market_leads_claims on public.market_leads (claimed_org, claimed_at desc);
+create index if not exists market_leads_author on public.market_leads (author_handle, detected_at desc);
+
+create table if not exists public.market_sources (
+  id            text primary key,               -- e.g. telegram:rent_in_dubai
+  kind          text not null,                  -- telegram
+  handle        text not null,
+  title         text,
+  enabled       boolean not null default true,
+  cursor        bigint not null default 0,      -- last message id read
+  last_scan_at  timestamptz,
+  last_error    text,
+  scanned_total int not null default 0,
+  leads_total   int not null default 0,
+  created_at    timestamptz not null default now()
+);
+
+-- People who asked not to be contacted, and numbers on the Do-Not-Call registry.
+create table if not exists public.market_suppression (
+  phone     text primary key,
+  reason    text,
+  added_at  timestamptz not null default now()
+);
+
+create table if not exists public.market_runs (
+  id          bigserial primary key,
+  started_at  timestamptz not null default now(),
+  ms          int,
+  scanned     int not null default 0,
+  leads       int not null default 0,
+  note        text
+);
+`;
+  }
+});
+
 // src/seekerstream/ingest.ts
 import { createHash } from "node:crypto";
-function fingerprint(text, title = "") {
-  const basis = [...normalizeText(`${title} ${text}`).toLowerCase()].slice(0, 600).join("");
+function fingerprint(text2, title = "") {
+  const basis = [...normalizeText(`${title} ${text2}`).toLowerCase()].slice(0, 600).join("");
   return createHash("sha256").update(basis, "utf8").digest("hex").slice(0, 32);
 }
 function emirateOf(areas) {
@@ -3929,7 +4129,7 @@ function evaluate(post) {
     const ok = !!normalizeUaeMobile(post.phone ?? "");
     return { post, pf: null, ex, keep: ok, why: ok ? "form with consent" : "form without a valid UAE mobile" };
   }
-  const pf = prefilter(post.text, { title: post.title, geoContext: post.source === "telegram" });
+  const pf = prefilter(post.text, { title: post.title, geoContext: post.source === "telegram" || post.source === "mourjan", demandContext: post.source === "mourjan" });
   if (pf.verdict === "demand" && AD_TELLS.test(post.text)) return { post, pf, ex, keep: false, why: "broker advert / company requirement" };
   return { post, pf, ex, keep: pf.verdict === "demand", why: pf.reason };
 }
@@ -4286,7 +4486,7 @@ var scan_exports = {};
 __export(scan_exports, {
   runScan: () => runScan
 });
-async function alertOwner(db, text) {
+async function alertOwner(db, text2) {
   const to = process.env.SEEKERSTREAM_ALERT_EMAIL, key = process.env.RESEND_API_KEY;
   if (!to || !key) return;
   const recent = await db.query("select 1 from market_runs where note like 'ALERT sent%' and started_at > now() - interval '12 hours' limit 1");
@@ -4294,7 +4494,7 @@ async function alertOwner(db, text) {
   const r = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
-    body: JSON.stringify({ from: process.env.EMAIL_FROM || "Corehold <onboarding@resend.dev>", to, subject: "Corehold: SeekerStream needs attention", text })
+    body: JSON.stringify({ from: process.env.EMAIL_FROM || "Corehold <onboarding@resend.dev>", to, subject: "Corehold: SeekerStream needs attention", text: text2 })
   }).catch(() => null);
   await db.query("insert into market_runs (ms, note) values (0, $1)", [`ALERT sent (${r?.status ?? "no response"})`]);
 }
@@ -4334,6 +4534,21 @@ async function runScan(opts = {}) {
       } catch (e) {
         notes.push(`search failed: ${e instanceof Error ? e.message : e}`);
       }
+      if (mourjanEnabled()) {
+        try {
+          const secs = mourjanSections();
+          const k = Math.floor(Date.now() / 6e4) % Math.ceil(secs.length / 6);
+          const mj = await scanMourjan(db, secs.slice(k * 6, k * 6 + 6), Date.now() + 25e3);
+          const evald = mj.posts.map(evaluate);
+          for (const e of evald) if (e.keep) await mj.fetchPhone(e.post);
+          const made = await storeLeads(db, evald);
+          created += made;
+          scanned += mj.ads;
+          notes.push(`mourjan ${mj.pages} pages, ${mj.ads} ads, +${made} leads${mj.blocked ? " BLOCKED-backed-off" : ""}`);
+        } catch (e) {
+          notes.push(`mourjan failed: ${e instanceof Error ? e.message : e}`);
+        }
+      }
       await db.query("update market_leads set hidden = true where not hidden and claimed_org is null and source = 'telegram' and body ~* $1", [AD_TELLS_PG]);
       const last = await db.query("select max(started_at) as at from market_runs where note like '%discovery%'");
       const due = !last.rows[0]?.at || Date.now() - new Date(last.rows[0].at).getTime() > 36e5;
@@ -4358,6 +4573,7 @@ async function runScan(opts = {}) {
 var init_scan = __esm({
   "src/seekerstream/scan.ts"() {
     "use strict";
+    init_mourjan();
     init_db();
     init_schema();
     init_ingest();
