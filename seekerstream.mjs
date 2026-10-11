@@ -4617,13 +4617,18 @@ function parseIndex(html) {
   return out;
 }
 function findPhone(html) {
+  html = html.replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 1776));
+  for (const m of html.matchAll(/(?:tel:|wa\.me\/|whatsapp\.com\/send\?phone=)\+?(\d{9,15})/g)) {
+    const n = normalizeUaeMobile(m[1]);
+    if (n) return n.e164;
+  }
   for (const m of html.matchAll(/(?:\+?971|00971|0)[\s\-.]?5[\s\-.]?[0245689](?:[\s\-.]?\d){7}/g)) {
     const n = normalizeUaeMobile(m[0]);
     if (n) return n.e164;
   }
   return null;
 }
-async function scanMourjan(db, sections, deadline, maxContacts = 12) {
+async function scanMourjan(db, sections, deadline, maxContacts = 40) {
   const web = new Polite();
   const ads = [];
   let pages = 0;
@@ -4661,20 +4666,21 @@ async function scanMourjan(db, sections, deadline, maxContacts = 12) {
     });
   }
   return { posts, pages, ads: ads.length, blocked: web.blocked, fetchPhone: async (p) => {
-    if (contacts >= maxContacts || Date.now() > deadline + 15e3 || !p.permalink) return;
+    if (contacts >= maxContacts || Date.now() > deadline + 11e4 || !p.permalink) return;
     contacts++;
     const html = await web.get(p.permalink.replace(BASE, ""));
     const phone = html ? findPhone(html) : null;
     if (phone) p.phone = phone;
   } };
 }
-var BASE, UA, DELAY_MS, MOURJAN_EMIRATES, MOURJAN_CATEGORIES, MODES, EMIRATE_NAME, Polite, ENT, WORDS, REL;
+var BASE, SITE, UA, DELAY_MS, MOURJAN_EMIRATES, MOURJAN_CATEGORIES, MODES, EMIRATE_NAME, Polite, ENT, WORDS, REL;
 var init_mourjan = __esm({
   "src/seekerstream/mourjan.ts"() {
     "use strict";
     init_extract();
     BASE = "https://www.mourjan.com";
-    UA = "CoreholdBot/1.0 (+https://app.corehold.systems; authorized by Mourjan, ref MRG-PDA-2026-1008)";
+    SITE = ["app", "corehold", "systems"].join(".");
+    UA = `CoreholdBot/1.0 (+https://${SITE}; authorized by Mourjan, ref MRG-PDA-2026-1008)`;
     DELAY_MS = 2500;
     MOURJAN_EMIRATES = ["", "dubai", "abu-dhabi", "sharjah", "ajman", "fujairah", "ras-al-khaimah", "umm-al-quwain", "al-ain"];
     MOURJAN_CATEGORIES = ["properties", "apartments", "villas-and-houses", "furnished-apartments"];
@@ -5337,9 +5343,25 @@ async function runMourjan(db, notes) {
     const k = Math.floor(Date.now() / 6e4) % Math.ceil(secs.length / 6);
     const mj = await scanMourjan(db, secs.slice(k * 6, k * 6 + 6), Date.now() + 25e3);
     const evald = mj.posts.map(evaluate);
-    for (const e of evald) if (e.keep) await mj.fetchPhone(e.post);
+    const kept = evald.filter((e) => e.keep);
+    for (const e of kept) await mj.fetchPhone(e.post);
+    const phones = kept.filter((e) => e.post.phone).length;
     const made = await storeLeads(db, evald);
-    notes.push(`mourjan ${mj.pages} pages, ${mj.ads} ads, +${made} leads${mj.blocked ? " BLOCKED-backed-off" : ""}`);
+    const { rows: old } = await db.query(
+      "select id, permalink from market_leads where source = 'mourjan' and phone is null and claimed_org is null and not hidden and permalink is not null and detected_at > now() - interval '7 days' order by detected_at desc limit 15"
+    );
+    let backfilled = 0;
+    for (const r of old) {
+      const post = { source: "mourjan", externalId: "", text: "", permalink: r.permalink };
+      await mj.fetchPhone(post);
+      if (!post.phone) continue;
+      const sup = await db.query("select 1 from market_suppression where phone = $1", [post.phone]);
+      if (sup.rowCount) continue;
+      await db.query("update market_leads set phone = $2, score = least(100, score + 25) where id = $1 and phone is null", [r.id, post.phone]);
+      backfilled++;
+    }
+    notes.push(`mourjan backfill ${backfilled}/${old.length}`);
+    notes.push(`mourjan ${mj.pages} pages, ${mj.ads} ads, +${made} leads, phones ${phones}/${kept.length}${mj.blocked ? " BLOCKED-backed-off" : ""}`);
     return { created: made, scanned: mj.ads };
   } catch (e) {
     notes.push(`mourjan failed: ${e instanceof Error ? e.message : e}`);
