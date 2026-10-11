@@ -1,4 +1,4 @@
-import{createRequire}from'module';const require=createRequire(import.meta.url);
+import { createRequire } from 'module'; const require = createRequire(import.meta.url);
 var __defProp = Object.defineProperty;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __esm = (fn, res, err) => function __init() {
@@ -212,6 +212,36 @@ var init_lexicon = __esm({
               "\\bmove[- ]in (?:date|by|from|on)\\b",
               "i",
               2
+            ],
+            [
+              "\\bany(?:one| one)? (?:has|have) (?:a |an )?(?:room|flat|studio|apartment|bed ?space)\\b",
+              "i",
+              3
+            ],
+            [
+              "\\b(?:room|flat|studio|apartment|bed ?space|partition|villa) (?:needed|required|wanted)\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bin need of\\b",
+              "i",
+              3
+            ],
+            [
+              "\\blooking for (?:a |an )?(?:1|2|3|4|one|two|three)\\s?(?:bhk|br|bed)",
+              "i",
+              3
+            ],
+            [
+              "\\bplanning to (?:buy|rent)\\b",
+              "i",
+              3
+            ],
+            [
+              "\\binterested in buying\\b",
+              "i",
+              3
             ]
           ]
         ],
@@ -347,6 +377,111 @@ var init_lexicon = __esm({
               "\u0644\u0644\u0639\u0627\u0626\u0644\u0647",
               "i",
               1
+            ],
+            [
+              "\u0627\u0628\u064A \u0627\u0634\u062A\u0631\u064A",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u063A\u064A \u0627\u0634\u062A\u0631\u064A",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0631\u064A\u062F \u0634\u0631\u0627\u0621",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0631\u063A\u0628 \u0641\u064A \u0634\u0631\u0627\u0621",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0631\u063A\u0628 \u0641\u064A \u0627\u0633\u062A\u0626\u062C\u0627\u0631",
+              "i",
+              3
+            ],
+            [
+              "\u0645\u0637\u0644\u0648\u0628 \u0644\u0644\u0634\u0631\u0627\u0621",
+              "i",
+              3
+            ],
+            [
+              "\u0645\u0637\u0644\u0648\u0628 \u0644\u0644\u0627\u064A\u062C\u0627\u0631",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u062D\u062B \u0639\u0646 \u0634\u0631\u0627\u0621",
+              "i",
+              3
+            ],
+            [
+              "\u062D\u062F \u0639\u0646\u062F\u0647",
+              "i",
+              2
+            ],
+            [
+              "\u0645\u0646 \u0639\u0646\u062F\u0647",
+              "i",
+              2
+            ],
+            [
+              "\u0627\u0628\u064A \u0634\u0642\u0647",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u063A\u064A \u0634\u0642\u0647",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u064A \u0641\u064A\u0644\u0627",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u063A\u064A \u0641\u064A\u0644\u0627",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u064A \u0633\u0643\u0646",
+              "i",
+              3
+            ],
+            [
+              "\u0627\u0628\u063A\u064A \u0633\u0643\u0646",
+              "i",
+              3
+            ],
+            [
+              "\u0628\u062F\u064A \u0634\u0642\u0647",
+              "i",
+              3
+            ],
+            [
+              "\u0639\u0627\u064A\u0632 \u0634\u0642\u0647",
+              "i",
+              3
+            ],
+            [
+              "\u0645\u062D\u062A\u0627\u062C \u0634\u0642\u0647",
+              "i",
+              3
+            ],
+            [
+              "\u0645\u062D\u062A\u0627\u062C \u0633\u0643\u0646",
+              "i",
+              3
+            ],
+            [
+              "\u0645\u062D\u062A\u0627\u062C\u064A\u0646 \u0633\u0643\u0646",
+              "i",
+              3
             ]
           ]
         ],
@@ -457,6 +592,26 @@ var init_lexicon = __esm({
               "\\bbhai koi\\b",
               "i",
               1
+            ],
+            [
+              "\\bchahye\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bchahie\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bkamra chahiye\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bmilega\\b",
+              "i",
+              2
             ]
           ]
         ],
@@ -642,6 +797,16 @@ var init_lexicon = __esm({
               "\\b\u0431\u0443\u0434\u0443 (?:\u0440\u0430\u0434|\u0440\u0430\u0434\u0430|\u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440)\\w*\\b",
               "i",
               2
+            ],
+            [
+              "\\b\u043A\u0443\u043F\u043B\u044E\\b",
+              "i",
+              3
+            ],
+            [
+              "\\b\u0438\u0449\u0443\\s+(?:\u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443|\u0441\u0442\u0443\u0434\u0438\u044E|\u043A\u043E\u043C\u043D\u0430\u0442\u0443|\u0432\u0438\u043B\u043B\u0443|\u0436\u0438\u043B\u044C[\u0435\u0451])\\b",
+              "i",
+              2
             ]
           ]
         ],
@@ -687,6 +852,31 @@ var init_lexicon = __esm({
               "\\bbudget ko\\b",
               "i",
               3
+            ],
+            [
+              "\\bnaghahanap po\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bhanap po\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bmay bakante\\b",
+              "i",
+              2
+            ],
+            [
+              "\\bneed po\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bbedspace po\\b",
+              "i",
+              2
             ]
           ]
         ],
@@ -762,6 +952,181 @@ var init_lexicon = __esm({
               "\u0627\u062C\u0627\u0631\u0647 \u0645\u064A\u200C\u062E\u0648\u0627\u0647\u0645",
               "i",
               3
+            ]
+          ]
+        ],
+        [
+          "zh",
+          [
+            [
+              "\u627E\u623F",
+              "i",
+              3
+            ],
+            [
+              "\u6C42\u79DF",
+              "i",
+              3
+            ],
+            [
+              "\u60F3\u79DF",
+              "i",
+              3
+            ],
+            [
+              "\u6C42\u8D2D",
+              "i",
+              3
+            ],
+            [
+              "\u60F3\u4E70",
+              "i",
+              2
+            ],
+            [
+              "\u5BFB\u627E",
+              "i",
+              2
+            ],
+            [
+              "\u5728\u627E",
+              "i",
+              2
+            ],
+            [
+              "\u627E.{0,4}(?:\u516C\u5BD3|\u623F\u95F4|\u623F\u5B50|\u5355\u95F4|\u5E8A\u4F4D|\u522B\u5885)",
+              "i",
+              3
+            ]
+          ]
+        ],
+        [
+          "uk",
+          [
+            [
+              "\\b\u0448\u0443\u043A\u0430\u044E\\b",
+              "i",
+              3
+            ],
+            [
+              "\\b\u0448\u0443\u043A\u0430\u0454\u043C\u043E\\b",
+              "i",
+              3
+            ],
+            [
+              "\\b\u0437\u043D\u0456\u043C\u0443\\b",
+              "i",
+              3
+            ],
+            [
+              "\\b\u043E\u0440\u0435\u043D\u0434\u0443\u044E\\b",
+              "i",
+              3
+            ],
+            [
+              "\\b\u043F\u043E\u0442\u0440\u0456\u0431\u043D[\u0430\u043E\u0456]\\b",
+              "i",
+              2
+            ]
+          ]
+        ],
+        [
+          "tr",
+          [
+            [
+              "\\bar\u0131yorum\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bar\u0131yoruz\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bkiralamak istiyorum\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bsat\u0131n almak istiyorum\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bariyorum\\b",
+              "i",
+              3
+            ]
+          ]
+        ],
+        [
+          "de",
+          [
+            [
+              "\\bsuche\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bsuchen\\b",
+              "i",
+              2
+            ],
+            [
+              "\\bgesucht\\b",
+              "i",
+              3
+            ]
+          ]
+        ],
+        [
+          "es",
+          [
+            [
+              "\\bbusco\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bbuscamos\\b",
+              "i",
+              3
+            ],
+            [
+              "\\bnecesito\\b",
+              "i",
+              2
+            ],
+            [
+              "\\bestoy buscando\\b",
+              "i",
+              3
+            ]
+          ]
+        ],
+        [
+          "ml",
+          [
+            [
+              "\u0D35\u0D47\u0D23\u0D02",
+              "i",
+              3
+            ],
+            [
+              "\u0D06\u0D35\u0D36\u0D4D\u0D2F\u0D2E\u0D41\u0D23\u0D4D\u0D1F\u0D4D",
+              "i",
+              3
+            ],
+            [
+              "\u0D05\u0D28\u0D4D\u0D35\u0D47\u0D37\u0D3F\u0D15\u0D4D\u0D15\u0D41\u0D28\u0D4D\u0D28\u0D41",
+              "i",
+              3
+            ],
+            [
+              "\u0D06\u0D35\u0D36\u0D4D\u0D2F\u0D02",
+              "i",
+              2
             ]
           ]
         ]
@@ -1964,6 +2329,146 @@ var init_lexicon = __esm({
         [
           "\\bplots?\\b",
           "i"
+        ],
+        [
+          "\u623F",
+          "i"
+        ],
+        [
+          "\u516C\u5BD3",
+          "i"
+        ],
+        [
+          "\u79DF\u623F",
+          "i"
+        ],
+        [
+          "\u623F\u95F4",
+          "i"
+        ],
+        [
+          "\u522B\u5885",
+          "i"
+        ],
+        [
+          "\u5355\u95F4",
+          "i"
+        ],
+        [
+          "\u5E8A\u4F4D",
+          "i"
+        ],
+        [
+          "\\bdaire\\b",
+          "i"
+        ],
+        [
+          "\\bkiral\u0131k\\b",
+          "i"
+        ],
+        [
+          "\\boda\\b",
+          "i"
+        ],
+        [
+          "\\bwohnung\\b",
+          "i"
+        ],
+        [
+          "\\bzimmer\\b",
+          "i"
+        ],
+        [
+          "\\bpiso\\b",
+          "i"
+        ],
+        [
+          "\\bapartamento\\b",
+          "i"
+        ],
+        [
+          "\\bhabitaci[o\xF3]n\\b",
+          "i"
+        ],
+        [
+          "\\bchambre\\b",
+          "i"
+        ],
+        [
+          "\u043A\u0456\u043C\u043D\u0430\u0442",
+          "i"
+        ],
+        [
+          "\u0436\u0438\u0442\u043B",
+          "i"
+        ],
+        [
+          "\u0D31\u0D42\u0D02",
+          "i"
+        ],
+        [
+          "\u0D2B\u0D4D\u0D32\u0D3E\u0D31\u0D4D\u0D31\u0D4D",
+          "i"
+        ],
+        [
+          "\u0D2C\u0D46\u0D21\u0D4D \u0D38\u0D4D\u0D2A\u0D47\u0D38\u0D4D",
+          "i"
+        ],
+        [
+          "\u0D15\u0D2E\u0D30",
+          "i"
+        ],
+        [
+          "\\bkamre\\b",
+          "i"
+        ],
+        [
+          "\\bbedspace\\b",
+          "i"
+        ],
+        [
+          "\\bbed space\\b",
+          "i"
+        ],
+        [
+          "\u0622\u067E\u0627\u0631\u062A\u0645\u0627\u0646",
+          "i"
+        ],
+        [
+          "\u0643\u0645\u0631\u0647",
+          "i"
+        ],
+        [
+          "\u06A9\u0645\u0631\u06C1",
+          "i"
+        ],
+        [
+          "\u0641\u0644\u064A\u062A",
+          "i"
+        ],
+        [
+          "\u0641\u0644\u062A",
+          "i"
+        ],
+        [
+          "\u0627\u0631\u0636 \u0633\u0643\u0646\u064A\u0647",
+          "i"
+        ],
+        [
+          "\u062A\u0627\u0648\u0646 \u0647\u0627\u0648\u0633",
+          "i"
+        ],
+        [
+          "\u062F\u0648\u0628\u0644\u0643\u0633",
+          "i"
+        ],
+        [
+          "\u0628\u0646\u062A\u0647\u0627\u0648\u0633",
+          "i"
+        ],
+        [
+          "\u063A\u0631\u0641\u0647 \u0646\u0648\u0645",
+          "i"
         ]
       ],
       geo: [
@@ -2213,6 +2718,266 @@ var init_lexicon = __esm({
         ],
         [
           "\u062F\u0628\u0626\u064A",
+          "i"
+        ],
+        [
+          "\u0631\u0627\u0633 \u0627\u0644\u062E\u064A\u0645\u0647",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0641\u062C\u064A\u0631\u0647",
+          "i"
+        ],
+        [
+          "\u0627\u0645 \u0627\u0644\u0642\u064A\u0648\u064A\u0646",
+          "i"
+        ],
+        [
+          "\u0627\u0628\u0648 \u0638\u0628\u064A",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0630\u064A\u062F",
+          "i"
+        ],
+        [
+          "\u062E\u0648\u0631\u0641\u0643\u0627\u0646",
+          "i"
+        ],
+        [
+          "\u0643\u0644\u0628\u0627\u0621",
+          "i"
+        ],
+        [
+          "\u062F\u0628\u0627 \u0627\u0644\u0641\u062C\u064A\u0631\u0647",
+          "i"
+        ],
+        [
+          "\u0645\u062F\u064A\u0646\u0647 \u0632\u0627\u064A\u062F",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0631\u0648\u064A\u0633",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0645\u0635\u0641\u062D",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u062E\u0648\u0627\u0646\u064A\u062C",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0646\u0647\u062F\u0647",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0642\u0627\u0633\u0645\u064A\u0647",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0645\u062C\u0627\u0632",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0631\u0627\u0634\u062F\u064A\u0647",
+          "i"
+        ],
+        [
+          "\u0627\u0644\u0646\u0639\u064A\u0645\u064A\u0647",
+          "i"
+        ],
+        [
+          "\u0410\u0434\u0436\u043C\u0430\u043D",
+          "i"
+        ],
+        [
+          "\u0420\u0430\u0441[- ]?\u044D\u043B\u044C[- ]?\u0425\u0430\u0439\u043C",
+          "i"
+        ],
+        [
+          "\u0424\u0443\u0434\u0436\u0435\u0439\u0440",
+          "i"
+        ],
+        [
+          "\u0423\u043C\u043C[- ]?\u044D\u043B\u044C[- ]?\u041A\u0430\u0439\u0432\u0430\u0439\u043D",
+          "i"
+        ],
+        [
+          "\u0410\u043B\u044C[- ]?\u0410\u0439\u043D",
+          "i"
+        ],
+        [
+          "\u0414\u0435\u0439\u0440",
+          "i"
+        ],
+        [
+          "\u8FEA\u62DC",
+          "i"
+        ],
+        [
+          "\u963F\u5E03\u624E\u6BD4",
+          "i"
+        ],
+        [
+          "\u6C99\u8FE6",
+          "i"
+        ],
+        [
+          "\u963F\u8054\u914B",
+          "i"
+        ],
+        [
+          "\u963F\u6CBB\u66FC",
+          "i"
+        ],
+        [
+          "\\bal ain\\b",
+          "i"
+        ],
+        [
+          "\\bkhor ?fakkan\\b",
+          "i"
+        ],
+        [
+          "\\bkalba\\b",
+          "i"
+        ],
+        [
+          "\\bdubaj\\b",
+          "i"
+        ],
+        [
+          "\\bdub[a\xE1]i\\b",
+          "i"
+        ],
+        [
+          "\\bduba\xEF\\b",
+          "i"
+        ],
+        [
+          "\\babou dhabi\\b",
+          "i"
+        ],
+        [
+          "\\bcharjah\\b",
+          "i"
+        ],
+        [
+          "\\babu ?dabi\\b",
+          "i"
+        ],
+        [
+          "\\bzayed city\\b",
+          "i"
+        ],
+        [
+          "\\bmuwaileh\\b",
+          "i"
+        ],
+        [
+          "\\bal majaz\\b",
+          "i"
+        ],
+        [
+          "\\bal taawun\\b",
+          "i"
+        ],
+        [
+          "\\bal qasimia\\b",
+          "i"
+        ],
+        [
+          "\\bal rashidiya\\b",
+          "i"
+        ],
+        [
+          "\\bal nuaimiya\\b",
+          "i"
+        ],
+        [
+          "\\bal jurf\\b",
+          "i"
+        ],
+        [
+          "\\bal hamidiya\\b",
+          "i"
+        ],
+        [
+          "\\bmina al arab\\b",
+          "i"
+        ],
+        [
+          "\\bmusaffah\\b",
+          "i"
+        ],
+        [
+          "\\bmohammed bin zayed\\b",
+          "i"
+        ],
+        [
+          "\\bjvt\\b",
+          "i"
+        ],
+        [
+          "\\bal furjan\\b",
+          "i"
+        ],
+        [
+          "\\btown ?square\\b",
+          "i"
+        ],
+        [
+          "\\barjan\\b",
+          "i"
+        ],
+        [
+          "\\bal warqa\\b",
+          "i"
+        ],
+        [
+          "\\bal barsha\\b",
+          "i"
+        ],
+        [
+          "\\bjumeirah\\b",
+          "i"
+        ],
+        [
+          "\u0D26\u0D41\u0D2C\u0D3E\u0D2F\u0D4D",
+          "i"
+        ],
+        [
+          "\u0D37\u0D3E\u0D7C\u0D1C",
+          "i"
+        ],
+        [
+          "\u0D05\u0D2C\u0D41\u0D26\u0D3E\u0D2C\u0D3F",
+          "i"
+        ],
+        [
+          "\u0905\u092C\u0942 \u0927\u093E\u092C\u0940",
+          "i"
+        ],
+        [
+          "\u0905\u091C\u092E\u093E\u0928",
+          "i"
+        ],
+        [
+          "\u062F\u0628\u06CC",
+          "i"
+        ],
+        [
+          "\u062F\u0648\u0628\u06CC",
+          "i"
+        ],
+        [
+          "\u0627\u0628\u0648\u0638\u0628\u06CC",
+          "i"
+        ],
+        [
+          "\u0634\u0627\u0631\u062C\u0647",
           "i"
         ]
       ],
@@ -3146,42 +3911,42 @@ var init_lexicon = __esm({
         ],
         [
           "Sharjah",
-          "\\bsharjah\\b|\u0627\u0644\u0634\u0627\u0631\u0642\u0647|\u0448\u0430\u0440\u0434\u0436",
+          "\\bsharjah\\b|\\bcharjah\\b|\u0627\u0644\u0634\u0627\u0631\u0642\u0647|\u0634\u0627\u0631\u062C\u0647|\u0448\u0430\u0440\u0434\u0436|\u6C99\u8FE6|\u0D37\u0D3E\u0D7C\u0D1C|\u0936\u093E\u0930\u091C\u093E\u0939|\\bal nahda sharjah\\b|\\bmuwaileh\\b|\\bal majaz\\b|\\bal taawun\\b|\\bal qasimia\\b|\\bal khan\\b|\u0627\u0644\u0630\u064A\u062F|\u062E\u0648\u0631\u0641\u0643\u0627\u0646|\u0643\u0644\u0628\u0627\u0621|\\bkhor ?fakkan\\b|\\bkalba\\b|\u0627\u0644\u0645\u062C\u0627\u0632|\u0627\u0644\u0642\u0627\u0633\u0645\u064A\u0647|\u0627\u0644\u0646\u0647\u062F\u0647 \u0627\u0644\u0634\u0627\u0631\u0642\u0647|\u0645\u0648\u064A\u0644\u062D",
           "i"
         ],
         [
           "Ajman",
-          "\\bajman\\b|\u0639\u062C\u0645\u0627\u0646|\u0430\u0434\u0436\u043C\u0430\u043D",
+          "\\bajman\\b|\u0639\u062C\u0645\u0627\u0646|\u0430\u0434\u0436\u043C\u0430\u043D|\u963F\u6CBB\u66FC|\u0905\u091C\u092E\u093E\u0928|\\bal nuaimiya\\b|\\bal jurf\\b|\u0627\u0644\u0646\u0639\u064A\u0645\u064A\u0647",
           "i"
         ],
         [
           "Abu Dhabi",
-          "abu dhabi|\u0627\u0628\u0648\u0638\u0628\u064A|\u0430\u0431\u0443[- ]?\u0434\u0430\u0431\u0438",
+          "abu ?dhabi|\\babou dhabi\\b|\\babu ?dabi\\b|\u0627\u0628\u0648\u0638\u0628\u064A|\u0627\u0628\u0648 \u0638\u0628\u064A|\u0627\u0628\u0648\u0638\u0628\u06CC|\u0430\u0431\u0443[- ]?\u0434\u0430\u0431\u0438|\u963F\u5E03\u624E\u6BD4|\u0D05\u0D2C\u0D41\u0D26\u0D3E\u0D2C\u0D3F|\u0905\u092C\u0942 \u0927\u093E\u092C\u0940|\\bmusaffah\\b|\u0627\u0644\u0645\u0635\u0641\u062D|\\bmohammed bin zayed\\b|\\bmbz\\b|\u0645\u062F\u064A\u0646\u0647 \u0632\u0627\u064A\u062F|\\bzayed city\\b|\u0627\u0644\u0631\u0648\u064A\u0633",
           "i"
         ],
         [
           "Ras Al Khaimah",
-          "ras al khaimah|\\brak\\b|\u0631\u0627\u0633 \u0627\u0644\u062E\u064A\u0645\u0647",
+          "ras al khaimah|ras al-khaimah|\\brak\\b|\u0631\u0627\u0633 \u0627\u0644\u062E\u064A\u0645\u0647|\u0440\u0430\u0441[- ]?\u044D\u043B\u044C[- ]?\u0445\u0430\u0439\u043C|\\bmina al arab\\b",
           "i"
         ],
         [
           "Fujairah",
-          "\\bfujairah\\b|\u0627\u0644\u0641\u062C\u064A\u0631\u0647",
+          "\\bfujairah\\b|\u0627\u0644\u0641\u062C\u064A\u0631\u0647|\u0444\u0443\u0434\u0436\u0435\u0439\u0440|\u062F\u0628\u0627 \u0627\u0644\u0641\u062C\u064A\u0631\u0647",
           "i"
         ],
         [
           "Umm Al Quwain",
-          "umm al quwain",
+          "umm al quwain|umm al-quwain|\\buaq\\b|\u0627\u0645 \u0627\u0644\u0642\u064A\u0648\u064A\u0646|\u0443\u043C\u043C[- ]?\u044D\u043B\u044C[- ]?\u043A\u0430\u0439\u0432\u0430\u0439\u043D",
           "i"
         ],
         [
           "Al Ain",
-          "\\bal ain\\b|\u0627\u0644\u0639\u064A\u0646",
+          "\\bal ain\\b|\u0627\u0644\u0639\u064A\u0646|\u0430\u043B\u044C[- ]?\u0430\u0439\u043D",
           "i"
         ],
         [
           "Dubai",
-          "\\bdubai\\b|\\bdxb\\b|\u062F\u0628\u064A|\u0434\u0443\u0431\u0430\u0439|\u0434\u0443\u0431\u0430\u0435|\u0434\u0443\u0431\u0430\u044F",
+          "\\bdubai\\b|\\bdub[a\xE1]i\\b|\\bduba\xEF\\b|\\bdubaj\\b|\\bdxb\\b|\u062F\u0628\u064A|\u062F\u0628\u06CC|\u062F\u0648\u0628\u06CC|\u062F\u0628\u0626\u064A|\u0434\u0443\u0431\u0430\u0439|\u0434\u0443\u0431\u0430\u0435|\u0434\u0443\u0431\u0430\u044F|\u0434\u0443\u0431\u0430\u0457|\u8FEA\u62DC|\u0D26\u0D41\u0D2C\u0D3E\u0D2F\u0D4D|\u0926\u0941\u092C\u0908",
           "i"
         ]
       ],
@@ -4326,17 +5091,20 @@ async function searchSeekers(client, db, queries, deadline) {
   for (const q of queries) {
     if (Date.now() > deadline) break;
     let res;
+    const ask = (groupsOnly) => client.invoke(new Api.messages.SearchGlobal({
+      q,
+      filter: new Api.InputMessagesFilterEmpty(),
+      minDate,
+      maxDate: 0,
+      offsetRate: 0,
+      offsetPeer: new Api.InputPeerEmpty(),
+      offsetId: 0,
+      limit: 100,
+      groupsOnly
+    }));
     try {
-      res = await client.invoke(new Api.messages.SearchGlobal({
-        q,
-        filter: new Api.InputMessagesFilterEmpty(),
-        minDate,
-        maxDate: 0,
-        offsetRate: 0,
-        offsetPeer: new Api.InputPeerEmpty(),
-        offsetId: 0,
-        limit: 50
-      }));
+      res = await ask(true);
+      if ("messages" in res && res.messages.length === 0) res = await ask(false);
     } catch (e) {
       if (/FLOOD_WAIT|wait of/i.test(e instanceof Error ? e.message : String(e))) break;
       continue;
@@ -4374,7 +5142,7 @@ async function searchSeekers(client, db, queries, deadline) {
   }
   return { posts, added };
 }
-var SEED_GROUPS, DISCOVERY_QUERIES, HOUSING_WORDS, UAE_WORDS, DEAD, SEEK_QUERIES;
+var SEED_GROUPS, DISCOVERY_QUERIES, HOUSING_WORDS, UAE_WORDS, DEAD, PLACES_EN, PLACES_AR, PLACES_RU, fill, SEEK_QUERIES;
 var init_telegram = __esm({
   "src/seekerstream/telegram.ts"() {
     "use strict";
@@ -4451,32 +5219,96 @@ var init_telegram = __esm({
       "Dubai room Filipino",
       "Dubai room Nepal",
       "Dubai accommodation Bangladesh",
-      "Sharjah bed space"
+      "Sharjah bed space",
+      // every emirate
+      "Ras Al Khaimah rent",
+      "RAK flats",
+      "Fujairah rent",
+      "Umm Al Quwain rent",
+      "Al Ain rent",
+      "Ajman rooms",
+      "Abu Dhabi rooms",
+      "Abu Dhabi bed space",
+      "\u0633\u0643\u0646 \u0631\u0627\u0633 \u0627\u0644\u062E\u064A\u0645\u0629",
+      "\u0627\u064A\u062C\u0627\u0631 \u0627\u0644\u0641\u062C\u064A\u0631\u0629",
+      "\u0639\u0642\u0627\u0631\u0627\u062A \u0639\u062C\u0645\u0627\u0646",
+      "\u0639\u0642\u0627\u0631\u0627\u062A \u0631\u0627\u0633 \u0627\u0644\u062E\u064A\u0645\u0629",
+      "\u0633\u0643\u0646 \u0627\u0644\u0639\u064A\u0646",
+      "\u0639\u0642\u0627\u0631\u0627\u062A \u0627\u0644\u0634\u0627\u0631\u0642\u0629",
+      "\u0628\u064A\u0639 \u0648\u0634\u0631\u0627\u0621 \u0639\u0642\u0627\u0631\u0627\u062A \u062F\u0628\u064A",
+      "\u0639\u0642\u0627\u0631\u0627\u062A \u0627\u0628\u0648\u0638\u0628\u064A",
+      "\u0420\u0430\u0441-\u044D\u043B\u044C-\u0425\u0430\u0439\u043C\u0430 \u043D\u0435\u0434\u0432\u0438\u0436\u0438\u043C\u043E\u0441\u0442\u044C",
+      "\u0410\u0434\u0436\u043C\u0430\u043D \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u044B",
+      "\u0410\u0431\u0443-\u0414\u0430\u0431\u0438 \u0436\u0438\u043B\u044C\u0435",
+      "\u0428\u0430\u0440\u0434\u0436\u0430 \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u044B",
+      "\u043D\u0435\u0434\u0432\u0438\u0436\u0438\u043C\u043E\u0441\u0442\u044C \u0414\u0443\u0431\u0430\u0439 \u043A\u0443\u043F\u0438\u0442\u044C",
+      // buyers
+      "Dubai property buyers",
+      "buy apartment Dubai",
+      "Dubai off plan",
+      "Dubai real estate investors",
+      "UAE property investment",
+      // more languages
+      "\u8FEA\u62DC \u79DF\u623F",
+      "\u8FEA\u62DC \u623F\u4EA7",
+      "\u8FEA\u62DC \u534E\u4EBA",
+      "Dubai T\xFCrk",
+      "Dubai emlak",
+      "Dubai Deutsche",
+      "Dubai fran\xE7ais",
+      "\u062F\u0628\u06CC \u0627\u062C\u0627\u0631\u0647",
+      "Dubai Malayali room",
+      "Dubai Pinoy rooms",
+      "\u041E\u0440\u0435\u043D\u0434\u0430 \u0414\u0443\u0431\u0430\u0439",
+      "Dubai Pakistani room",
+      "Abu Dhabi Pinoy",
+      "Sharjah Malayali"
     ];
-    HOUSING_WORDS = /rent|room|flat|apartment|propert|real ?estate|housing|bed ?space|accommodation|аренд|снять|сним|недвиж|квартир|комнат|жиль|عقار|سكن|ايجار|إيجار|شقق|غرف|kamra|ghar/iu;
-    UAE_WORDS = /dubai|uae|abu ?dhabi|sharjah|ajman|emirates|дубай|оаэ|абу|шардж|эмират|دبي|الامارات|الإمارات|ابوظبي|أبوظبي|الشارقة|عجمان/iu;
+    HOUSING_WORDS = /rent|room|flat|apartment|propert|real ?estate|realty|housing|bed ?space|accommodation|villa|off ?plan|аренд|снять|сним|недвиж|квартир|комнат|жиль|оренд|житл|عقار|سكن|ايجار|إيجار|شقق|شقة|غرف|فلل|اجاره|kamra|ghar|emlak|kiralık|wohnung|logement|租|房|bedspace|partition/iu;
+    UAE_WORDS = /dubai|uae|abu ?dhabi|sharjah|ajman|emirates|ras ?al ?khaimah|\brak\b|fujairah|umm ?al ?quwain|al ?ain|дубай|оаэ|абу|шардж|аджман|эмират|фуджейр|хайм|دبي|دبی|الامارات|الإمارات|ابوظبي|أبوظبي|ابو ظبي|الشارقة|عجمان|راس الخيمة|رأس الخيمة|الفجيرة|ام القيوين|أم القيوين|العين|迪拜|阿联酋|阿布扎比|沙迦/iu;
     DEAD = /USERNAME_NOT_OCCUPIED|USERNAME_INVALID|CHANNEL_PRIVATE|CHANNEL_INVALID|No user has|Cannot find any entity|not a group/i;
+    PLACES_EN = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain", "Al Ain"];
+    PLACES_AR = ["\u062F\u0628\u064A", "\u0627\u0628\u0648\u0638\u0628\u064A", "\u0627\u0644\u0634\u0627\u0631\u0642\u0629", "\u0639\u062C\u0645\u0627\u0646", "\u0631\u0627\u0633 \u0627\u0644\u062E\u064A\u0645\u0629", "\u0627\u0644\u0641\u062C\u064A\u0631\u0629", "\u0627\u0645 \u0627\u0644\u0642\u064A\u0648\u064A\u0646", "\u0627\u0644\u0639\u064A\u0646"];
+    PLACES_RU = ["\u0414\u0443\u0431\u0430\u0439", "\u0410\u0431\u0443-\u0414\u0430\u0431\u0438", "\u0428\u0430\u0440\u0434\u0436\u0430", "\u0410\u0434\u0436\u043C\u0430\u043D", "\u0420\u0430\u0441-\u044D\u043B\u044C-\u0425\u0430\u0439\u043C\u0430", "\u0424\u0443\u0434\u0436\u0435\u0439\u0440\u0430"];
+    fill = (tpl, places) => tpl.flatMap((t2) => places.map((p) => t2.replace("{p}", p)));
     SEEK_QUERIES = [
-      "\u0438\u0449\u0443 \u0441\u0442\u0443\u0434\u0438\u044E \u0414\u0443\u0431\u0430\u0439",
-      "\u0438\u0449\u0443 \u043A\u043E\u043C\u043D\u0430\u0442\u0443 \u0414\u0443\u0431\u0430\u0439",
-      "\u0441\u043D\u0438\u043C\u0443 \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443 \u0414\u0443\u0431\u0430\u0439",
-      "\u0438\u0449\u0443 1 bedroom \u0414\u0443\u0431\u0430\u0439",
-      "\u0441\u043D\u0438\u043C\u0443 \u0428\u0430\u0440\u0434\u0436\u0430",
-      "\u0438\u0449\u0443 \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443 \u0410\u0431\u0443-\u0414\u0430\u0431\u0438",
-      "looking for studio Dubai",
-      "looking for room Dubai",
-      "need bedspace Dubai",
-      "looking for 1 bedroom Dubai",
-      "looking for apartment Abu Dhabi",
-      "looking to buy apartment Dubai",
-      "need room Sharjah",
-      "looking for flat Ajman",
-      "\u0645\u0637\u0644\u0648\u0628 \u0634\u0642\u0629 \u0644\u0644\u0627\u064A\u062C\u0627\u0631 \u062F\u0628\u064A",
-      "\u0627\u0628\u062D\u062B \u0639\u0646 \u0634\u0642\u0629 \u062F\u0628\u064A",
-      "\u0627\u0628\u063A\u0649 \u0634\u0642\u0629 \u0627\u0644\u0634\u0627\u0631\u0642\u0629",
-      "\u0645\u0637\u0644\u0648\u0628 \u063A\u0631\u0641\u0629 \u062F\u0628\u064A",
-      "\u0627\u0628\u062D\u062B \u0639\u0646 \u0633\u0643\u0646 \u0627\u0628\u0648\u0638\u0628\u064A",
-      "\u0645\u0637\u0644\u0648\u0628 \u0634\u0642\u0629 \u0639\u062C\u0645\u0627\u0646"
+      ...fill(["looking for flat {p}", "looking for room {p}", "looking for studio {p}", "looking to buy {p}", "looking for villa {p}", "bed space needed {p}", "need apartment {p}"], PLACES_EN),
+      ...fill(["\u0645\u0637\u0644\u0648\u0628 \u0634\u0642\u0629 {p}", "\u0627\u0628\u062D\u062B \u0639\u0646 \u0634\u0642\u0629 {p}", "\u0645\u0637\u0644\u0648\u0628 \u0641\u064A\u0644\u0627 {p}", "\u0627\u0628\u063A\u0649 \u0633\u0643\u0646 {p}", "\u0645\u0637\u0644\u0648\u0628 \u063A\u0631\u0641\u0629 {p}", "\u0627\u0628\u064A \u0627\u0634\u062A\u0631\u064A {p}", "\u0645\u0637\u0644\u0648\u0628 \u0644\u0644\u0634\u0631\u0627\u0621 {p}"], PLACES_AR),
+      ...fill(["\u0438\u0449\u0443 \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443 {p}", "\u0441\u043D\u0438\u043C\u0443 {p}", "\u0438\u0449\u0443 \u043A\u043E\u043C\u043D\u0430\u0442\u0443 {p}", "\u043A\u0443\u043F\u043B\u044E \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443 {p}", "\u0438\u0449\u0443 \u0441\u0442\u0443\u0434\u0438\u044E {p}"], PLACES_RU),
+      // South Asian
+      "room chahiye Dubai",
+      "flat chahiye Dubai",
+      "bedspace chahiye Dubai",
+      "room chahiye Sharjah",
+      "room chahiye Abu Dhabi",
+      "kamra chahiye Dubai",
+      "room chahiye Ajman",
+      "\u0D26\u0D41\u0D2C\u0D3E\u0D2F\u0D4D \u0D31\u0D42\u0D02 \u0D35\u0D47\u0D23\u0D02",
+      "\u0D37\u0D3E\u0D7C\u0D1C \u0D31\u0D42\u0D02 \u0D35\u0D47\u0D23\u0D02",
+      "\u0D05\u0D2C\u0D41\u0D26\u0D3E\u0D2C\u0D3F \u0D2C\u0D46\u0D21\u0D4D \u0D38\u0D4D\u0D2A\u0D47\u0D38\u0D4D \u0D35\u0D47\u0D23\u0D02",
+      "\u062F\u0628\u0626\u06CC \u06A9\u0645\u0631\u06C1 \u0686\u0627\u06C1\u06CC\u06D2",
+      "\u0936\u093E\u0930\u091C\u093E\u0939 \u0915\u092E\u0930\u093E \u091A\u093E\u0939\u093F\u090F",
+      "\u0926\u0941\u092C\u0908 \u0915\u092E\u0930\u093E \u091A\u093E\u0939\u093F\u090F",
+      // Filipino
+      "naghahanap ng bedspace Dubai",
+      "hanap room Dubai",
+      "naghahanap ng room Abu Dhabi",
+      "hanap bedspace Sharjah",
+      "need bedspace po Dubai",
+      // Other expat languages
+      "je cherche appartement Dubai",
+      "je cherche logement Abu Dhabi",
+      "\u062F\u0646\u0628\u0627\u0644 \u0622\u067E\u0627\u0631\u062A\u0645\u0627\u0646 \u062F\u0628\u06CC",
+      "\u0627\u062C\u0627\u0631\u0647 \u062E\u0627\u0646\u0647 \u062F\u0628\u06CC",
+      "\u8FEA\u62DC \u627E\u623F",
+      "\u8FEA\u62DC \u6C42\u79DF",
+      "\u963F\u5E03\u624E\u6BD4 \u79DF\u623F",
+      "\u8FEA\u62DC \u6C42\u8D2D",
+      "\u0448\u0443\u043A\u0430\u044E \u043A\u0432\u0430\u0440\u0442\u0438\u0440\u0443 \u0414\u0443\u0431\u0430\u0439",
+      "Dubai daire ar\u0131yorum",
+      "suche Wohnung Dubai",
+      "busco piso Dubai",
+      "busco apartamento Dubai"
     ];
   }
 });
@@ -4498,6 +5330,22 @@ async function alertOwner(db, text2) {
   }).catch(() => null);
   await db.query("insert into market_runs (ms, note) values (0, $1)", [`ALERT sent (${r?.status ?? "no response"})`]);
 }
+async function runMourjan(db, notes) {
+  if (!mourjanEnabled()) return { created: 0, scanned: 0 };
+  try {
+    const secs = mourjanSections();
+    const k = Math.floor(Date.now() / 6e4) % Math.ceil(secs.length / 6);
+    const mj = await scanMourjan(db, secs.slice(k * 6, k * 6 + 6), Date.now() + 25e3);
+    const evald = mj.posts.map(evaluate);
+    for (const e of evald) if (e.keep) await mj.fetchPhone(e.post);
+    const made = await storeLeads(db, evald);
+    notes.push(`mourjan ${mj.pages} pages, ${mj.ads} ads, +${made} leads${mj.blocked ? " BLOCKED-backed-off" : ""}`);
+    return { created: made, scanned: mj.ads };
+  } catch (e) {
+    notes.push(`mourjan failed: ${e instanceof Error ? e.message : e}`);
+    return { created: 0, scanned: 0 };
+  }
+}
 async function runScan(opts = {}) {
   const t0 = Date.now();
   const budgetMs = Math.min(Number(process.env.SS_BUDGET_CAP_MS ?? 21e3), Math.max(opts.budgetMs ?? 0, 14e3));
@@ -4505,71 +5353,64 @@ async function runScan(opts = {}) {
   return withClient(async (db) => {
     await ensureSchema(db);
     await seedSources(db);
-    if (!telegramConfigured()) {
-      await db.query("insert into market_runs (ms, note) values ($1, 'telegram not configured')", [Date.now() - t0]);
-      return { skipped: "telegram not configured" };
-    }
-    let client;
-    try {
-      client = await connectTelegram();
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      await db.query("insert into market_runs (ms, note) values ($1, $2)", [Date.now() - t0, `ERROR connect: ${msg.slice(0, 200)}`]);
-      await alertOwner(db, `SeekerStream cannot connect to Telegram: ${msg}. Leads stop until a fresh TELEGRAM_SESSION is set in Netlify.`);
-      throw e;
-    }
     let scanned = 0, created = 0, discovered = 0;
     const notes = [];
-    try {
-      const { posts, scanned: n } = await scanTelegram(client, db, t0 + budgetMs);
-      scanned = n;
-      created = await storeLeads(db, posts.map(evaluate));
+    let client = null;
+    if (!telegramConfigured()) notes.push("telegram not configured");
+    else {
       try {
-        const k = Math.floor(Date.now() / 9e5) % Math.ceil(SEEK_QUERIES.length / 4);
-        const found = await searchSeekers(client, db, SEEK_QUERIES.slice(k * 4, k * 4 + 4), t0 + budgetMs + 8e3);
-        const more = await storeLeads(db, found.posts.map(evaluate));
-        created += more;
-        scanned += found.posts.length;
-        notes.push(`search ${found.posts.length} posts, +${more} leads, +${found.added} groups`);
+        client = await connectTelegram();
       } catch (e) {
-        notes.push(`search failed: ${e instanceof Error ? e.message : e}`);
+        const msg = e instanceof Error ? e.message : String(e);
+        notes.push(`ERROR connect: ${msg.slice(0, 200)}`);
+        await alertOwner(db, `SeekerStream cannot connect to Telegram: ${msg}. Telegram leads stop until a fresh TELEGRAM_SESSION is set.`);
       }
-      if (mourjanEnabled()) {
-        try {
-          const secs = mourjanSections();
-          const k = Math.floor(Date.now() / 6e4) % Math.ceil(secs.length / 6);
-          const mj = await scanMourjan(db, secs.slice(k * 6, k * 6 + 6), Date.now() + 25e3);
-          const evald = mj.posts.map(evaluate);
-          for (const e of evald) if (e.keep) await mj.fetchPhone(e.post);
-          const made = await storeLeads(db, evald);
-          created += made;
-          scanned += mj.ads;
-          notes.push(`mourjan ${mj.pages} pages, ${mj.ads} ads, +${made} leads${mj.blocked ? " BLOCKED-backed-off" : ""}`);
-        } catch (e) {
-          notes.push(`mourjan failed: ${e instanceof Error ? e.message : e}`);
-        }
-      }
-      await db.query("update market_leads set hidden = true where not hidden and claimed_org is null and source = 'telegram' and body ~* $1", [AD_TELLS_PG]);
-      const last = await db.query("select max(started_at) as at from market_runs where note like '%discovery%'");
-      const due = !last.rows[0]?.at || Date.now() - new Date(last.rows[0].at).getTime() > 36e5;
-      if (due && Date.now() - t0 < budgetMs + 8e3) {
-        const k = Math.floor(Date.now() / 36e5) % Math.ceil(DISCOVERY_QUERIES.length / 4);
-        try {
-          discovered = await discoverGroups(client, db, DISCOVERY_QUERIES.slice(k * 4, k * 4 + 4));
-          notes.push(`discovery +${discovered}`);
-        } catch (e) {
-          notes.push(`discovery failed: ${e instanceof Error ? e.message : e}`);
-        }
-      }
-    } finally {
-      await client.destroy().catch(() => {
-      });
     }
+    if (client) {
+      try {
+        try {
+          const pass = Math.floor(Date.now() / 9e4);
+          const n2 = Math.ceil(SEEK_QUERIES.length / SEARCH_PER_PASS);
+          const k = pass % n2;
+          const found = await searchSeekers(client, db, SEEK_QUERIES.slice(k * SEARCH_PER_PASS, k * SEARCH_PER_PASS + SEARCH_PER_PASS), Date.now() + 4e4);
+          const more = await storeLeads(db, found.posts.map(evaluate));
+          created += more;
+          scanned += found.posts.length;
+          notes.push(`search ${found.posts.length} posts, +${more} leads, +${found.added} groups`);
+        } catch (e) {
+          notes.push(`search failed: ${e instanceof Error ? e.message : e}`);
+        }
+        const { posts, scanned: n } = await scanTelegram(client, db, Date.now() + budgetMs);
+        scanned += n;
+        const g = await storeLeads(db, posts.map(evaluate));
+        created += g;
+        notes.push(`groups ${n} msgs, +${g} leads`);
+        await db.query("update market_leads set hidden = true where not hidden and claimed_org is null and source = 'telegram' and body ~* $1", [AD_TELLS_PG]);
+        const last = await db.query("select max(started_at) as at from market_runs where note like '%discovery%'");
+        const due = !last.rows[0]?.at || Date.now() - new Date(last.rows[0].at).getTime() > 18e5;
+        if (due) {
+          const k = Math.floor(Date.now() / 18e5) % Math.ceil(DISCOVERY_QUERIES.length / 4);
+          try {
+            discovered = await discoverGroups(client, db, DISCOVERY_QUERIES.slice(k * 4, k * 4 + 4));
+            notes.push(`discovery +${discovered}`);
+          } catch (e) {
+            notes.push(`discovery failed: ${e instanceof Error ? e.message : e}`);
+          }
+        }
+      } finally {
+        await client.destroy().catch(() => {
+        });
+      }
+    }
+    const mj = await runMourjan(db, notes);
+    created += mj.created;
+    scanned += mj.scanned;
     const ms = Date.now() - t0;
     await db.query("insert into market_runs (ms, scanned, leads, note) values ($1,$2,$3,$4)", [ms, scanned, created, notes.join("; ") || null]);
     return { ms, scanned, created, discovered };
   });
 }
+var SEARCH_PER_PASS;
 var init_scan = __esm({
   "src/seekerstream/scan.ts"() {
     "use strict";
@@ -4578,6 +5419,7 @@ var init_scan = __esm({
     init_schema();
     init_ingest();
     init_telegram();
+    SEARCH_PER_PASS = Number(process.env.SS_SEARCH_PER_PASS ?? 6);
   }
 });
 
